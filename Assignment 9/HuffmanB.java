@@ -7,15 +7,19 @@ import java.util.*;
 
 public class HuffmanB{
 
+
   int[][] codetree = null;
   int buf = 0; int position = 0;
   int actualNumberOfSymbols = 0;
   int filesize = 0;
 
+
  void readTree(){  // read Huffman tree
   try{
    actualNumberOfSymbols = System.in.read();
+   System.err.println("ERRRORRR:" + actualNumberOfSymbols);
    codetree = new int[actualNumberOfSymbols * 2 - 1][2];
+   
    for (int i = 0; i < actualNumberOfSymbols * 2 - 1; i++){
      codetree[i][0] = System.in.read();
      codetree[i][1] = System.in.read();
@@ -51,12 +55,14 @@ public class HuffmanB{
   int bit = -1;   // next bit from compressed file: 0 or 1.  no more bit: -1
   int k = 0;  // index to the Huffman tree array; k = 0 is the root of tree
   int n = 0;  // number of symbols decoded, stop the while loop when n == filesize
+  int numBits = 0; // number of bits in the compressed file
   while ((bit = inputBit()) >= 0){
-    // Your code: replace k by the index of a child according to bit (Walk down tree)
+    k = codetree[k][bit];
+    numBits++;
     if (codetree[k][0] == 0){  // leaf
        System.out.write(codetree[k][1]);
        if (n++ == filesize) break; // ignore any additional bits
-       // Your code: restart for the next symbol by move to the root (Go up to root)
+       k = 0;
     }
   }
   System.out.flush();
