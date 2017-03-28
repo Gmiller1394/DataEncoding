@@ -89,31 +89,47 @@ Point multiply(Point P, BigInteger n){
     publicKeyB = multiply(G, privateKeyB);
  }
 
- void ECDSA(){  // 13.5 of book
-   BigInteger message = new BigInteger(160, random);  // this is e = H(m) in book
-   System.out.println(message.toString(16));
-   BigInteger k = new BigInteger(privateKeySize, random);
-   Point kG; // k times G
-   BigInteger r; // r = kG.x mod n
-   BigInteger s; // s = k's modInverse times (message plus privateKeyB times r) mod n
-   // if r or s == 0 redo k
-   // (r,s) is the signature for message (digest)
-   BigInteger w; // w is s's multiplicative inverse mod n
-   BigInteger u1; // u1 = message times w
-   BigInteger u2; // u2 = r times w
-   Point X;  // X is u1 times G + u2 times publicKeyB
-   if (X.equals(Point.O)) ;// reject the signature
-   else if (X.x.mod(n).equals(r)) ;// accept the signature 
-   else ;// reject the signature
- }
-   
-   
-public static void main(String[] args){
-   EC2 ec2 = new EC2();
-   ec2.readCurveSpecs(args[0]);
-   ec2.generateKeys();
-   ec2.ECDSA();
-}
+    void ECDSA(){  // 13.5 of book
+        BigInteger message = new BigInteger(160, random);  // this is e = H(m) in book
+        System.out.println(message.toString(16));
+        BigInteger k;
+        Point kG; // k times G
+        BigInteger r = new BigInteger("0"); // r = kG.x mod n
+        BigInteger s = new BigInteger("0"); // s = k's modInverse times (message plus privateKeyB times r) mod n
+
+        // if r or s == 0 redo k
+        // (r,s) is the signature for message (digest)
+        while(r.intValue() == 0 || s.intValue() == 0){
+            k = new BigInteger(privateKeySize, random);
+            kG = multiply(G, k);
+            r = kG.x.mod(n);
+            s = k.modInverse(p);
+            s = k.multiply(message.add(privateKeyB.multiply(r))).mod(n);
+        }
+
+        // w is s's multiplicative inverse mod n
+        BigInteger w = s.modInverse(n);
+        // u1 = message times w
+        BigInteger u1 = message.multiply(w);
+        // u2 = r times w
+        BigInteger u2 = r.multiply(w);
+        // X is u1 times G + u2 times publicKeyB
+        Point X = multiply((add(G,multiply(publicKeyB, u2))), u1);
+        if (X.equals(Point.O)) // reject the signature
+            System.out.println("Rejected");
+        else if (X.x.mod(n).equals(r)) // accept the signature
+            System.out.println("Accepted");
+        else // reject the signature
+        System.out.println("Rejected");
+    }
+
+
+    public static void main(String[] args){
+        EC2 ec2 = new EC2();
+        ec2.readCurveSpecs(args[0]);
+        ec2.generateKeys();
+        ec2.ECDSA();
+    }
 }
 
   
