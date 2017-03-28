@@ -17,7 +17,7 @@ public class HuffmanB{
  void readTree(){  // read Huffman tree
   try{
    actualNumberOfSymbols = System.in.read();
-   System.err.println("ERRRORRR:" + actualNumberOfSymbols);
+   //System.err.println("ERRRORRR:" + actualNumberOfSymbols);
    codetree = new int[actualNumberOfSymbols * 2 - 1][2];
    
    for (int i = 0; i < actualNumberOfSymbols * 2 - 1; i++){
@@ -69,6 +69,13 @@ public class HuffmanB{
  }
 
  public static void main(String[] args){
+      if(args.length > 1) {
+         try {
+             System.setIn(new FileInputStream(args[1]));
+         } catch (IOException ex) {
+             System.err.println("Failed to read file.");
+         }
+     }
   HuffmanB huffman = new HuffmanB();
   huffman.readTree();
   huffman.decode(); 

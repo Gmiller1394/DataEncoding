@@ -34,7 +34,7 @@ public class HuffmanA{
     byte[] buffer = new byte[blockSize];
     FileInputStream fis = null;
     try {
-      filename = "compressed.huf";
+      //filename = "compressed.huf";
       fis = new FileInputStream(filename);
     } catch (FileNotFoundException e){
       System.err.println(filename + " not found");
@@ -175,6 +175,7 @@ public class HuffmanA{
     huffman.makeCodewords();
     huffman.buildTreeArray(); 
     huffman.outputTree();
-    huffman.encode("compressed.huf"); 
+    //huffman.encode("compressed.huf"); 
+    huffman.encode(args[0]);
   }
 }
