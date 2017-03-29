@@ -59,9 +59,6 @@ class BWB{
      System.out.write(F[j]);
      j = T[j];
    }
-   // Now we have I, L, F, and T 
-   // Your code here for printing the decoded block using System.out.write().
-   
  }
 
  void decode(){
