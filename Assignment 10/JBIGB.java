@@ -1,7 +1,7 @@
 // JBIGB.java CS5125/6025 Cheng 2017
 // Adaptive Arithmetic Decoding with Bi-level Images
 // inverse of JBIGA.java
-// Usage: java JBIGB < compressed > decoded.pbm
+// Usage:java JBIGB < compressed > decoded.pbm
 
 import java.io.*;
 
