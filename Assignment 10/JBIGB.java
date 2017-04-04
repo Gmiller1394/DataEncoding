@@ -116,11 +116,15 @@ public class JBIGB{
        }else if (low >= half){ 
          high = (high * 2) - maxRange;
          low = (low * 2) - maxRange;
-         // code for updating codeword
+                codeword = (codeword * 2) - maxRange; // code for updating codeword
+                if (inputBit() > 0)
+                    codeword |= 1;
        }else if (low > quarter && high <= threequarters){
          low = (low * 4 - maxRange) / 2;
          high = (high * 4 - maxRange) / 2;
-         // code for updating codeword
+                codeword = (codeword * 4 - maxRange) / 2; // code for updating codeword
+                if (inputBit() > 0)
+                    codeword |= 1;
        }else break;
     }
     return ret;
