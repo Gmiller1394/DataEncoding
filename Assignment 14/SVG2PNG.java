@@ -159,6 +159,12 @@ public class SVG2PNG{
    compresser.setInput(data);
    compresser.finish();
    // your code for
+   compressedDataLength = compresser.deflate(idat, 8, height*lineWidth - 8);
+   compresser.end();
+   fillNumber(idat, 0, compressedDataLength);
+   crc32.reset();
+   crc32.update(idat);
+   fillNumber(idat, 8 + compressedDataLength, crc32.getValue());
    // 1. deflate data into idat at position 8.
    // 2. place compressedDataLength at position 0 of idat
    // 3. compute CRC for idat without the length
