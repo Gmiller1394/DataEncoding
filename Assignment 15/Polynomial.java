@@ -125,10 +125,14 @@ public class Polynomial{
 		return G;
 	}
 
-	public static void main(String[] args){
-		Polynomial p = new Polynomial(args[0]);
-		p.RSencode().display("RScode");
-	}
+    public static void main(String[] args){
+        Polynomial p = new Polynomial(9);
+        int [] alog = (p.f.alog);
+        p.RSencode().display("RScode");
+        for(int i=0;i<17;i++) {
+            System.out.println("alog[" + i + "] evaluated with G: " + p.G.evaluate(alog[i]));
+        }
+
+    }
 }
 
-	
