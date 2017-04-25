@@ -70,10 +70,20 @@ public class JPEGLSB{
   }
 
   int unmapError(int error, int predicted){
-     int e = ?  // Your code for computing e from error
-          // need inverse of error = f(e) as the following line in JPEGLSA.mapError():
-          //    int error = (e >= 0) ? e * 2 : -e * 2 - 1;
-          //  e = f^-1(error);  f^-1 is the inverse of f above.
+      int e = 0;
+      if((error % 2) == 0) {
+          error = error/2;
+          e = error;
+      }
+      else {
+          error = ((error+1) * -1)/2;
+          e = error;
+      }
+      
+    // Your code for computing e from error
+    // need inverse of error = f(e) as the following line in JPEGLSA.mapError():
+    // int error = (e >= 0) ? e * 2 : -e * 2 - 1;
+    // e = f^-1(error);  f^-1 is the inverse of f above.
      int value = predicted + e;
      if (value > 255) value -= 256;
      else if (value < 0) value += 256;
